@@ -1,0 +1,318 @@
+@font-face {
+    font-family: "Eugusto";
+    src: url(../assets/fonts/EugustoFreePersonalUse-Regular.otf);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #201D30;
+    font-family: "Eugusto", serif, sans-serif;
+    color: #FFFFFF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #171424;
+    display: flex;
+    justify-content: center;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 36px;
+    height: auto;
+}
+
+h1 {
+    color: #F8C761;
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+.profile-icon img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: block;
+}
+
+main {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+}
+
+.banner {
+    background-color: #595082;
+    border-radius: 24px;
+    padding: 24px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.banner h2 {
+    color: #FFFFFF;
+    font-size: 1.3rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.banner p {
+    font-size: 0.95rem;
+    color: #E2E0EC;
+    margin-bottom: 18px;
+    line-height: 1.3;
+}
+
+.btn-catalog {
+    background-color: #F8C761;
+    color: #201D30;
+    text-decoration: none;
+    padding: 10px 32px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    display: inline-block;
+}
+
+.slider-section {
+    width: 100%;
+}
+
+.slider-section h2 {
+    color: #F8C761;
+    font-weight: normal;
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+}
+
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.cards-container {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 8px;
+    width: 100%;
+    scrollbar-width: none;
+}
+
+.cards-container::-webkit-scrollbar {
+    display: none;
+}
+
+.book-card {
+    flex: 0 0 135px;
+    background-color: #595082;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.book-cover {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    background-color: #2C263F;
+}
+
+.book-info {
+    padding: 10px 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.book-title {
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.book-author {
+    font-size: 0.8rem;
+    color: #D1CDDF;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.book-rating {
+    font-size: 0.8rem;
+    color: #F8C761;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.slider-btn {
+    position: absolute;
+    right: -10px;
+    background-color: #595082;
+    border: 2px solid #201D30;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    padding: 0;
+}
+
+.slider-btn img {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+footer {
+    width: 100%;
+    background-color: #171424;
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px;
+    margin-top: 40px;
+}
+
+.footer-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+footer a {
+    color: #F8C761;
+    text-decoration: underline;
+    font-size: 0.85rem;
+}
+
+footer p {
+    color: #F8C761;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+@media (min-width: 768px) {
+    header {
+        padding: 18px 32px;
+    }
+
+    .logo img {
+        width: 44px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .profile-icon img {
+        width: 44px;
+        height: 44px;
+    }
+
+    main {
+        gap: 40px;
+        padding: 0 32px;
+    }
+
+    .banner {
+        padding: 40px 30px;
+        border-radius: 28px;
+    }
+
+    .banner h2 {
+        font-size: 2rem;
+    }
+
+    .banner p {
+        font-size: 1.15rem;
+    }
+
+    .btn-catalog {
+        padding: 12px 40px;
+        font-size: 1.2rem;
+    }
+
+    .slider-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 18px;
+    }
+
+    .cards-container {
+        gap: 20px;
+    }
+
+    .book-card {
+        flex: 0 0 calc(25% - 15px);
+        border-radius: 22px;
+    }
+
+    .book-title {
+        font-size: 1rem;
+    }
+
+    .book-author {
+        font-size: 0.88rem;
+    }
+
+    .slider-btn {
+        display: none;
+    }
+
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    footer a, footer p {
+        font-size: 0.95rem;
+    }
+}

@@ -1,0 +1,273 @@
+@font-face {
+    font-family: "Eugusto";
+    src: url(../assets/fonts/EugustoFreePersonalUse-Regular.otf);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+.catalog-section {
+    width: 100%;
+    min-height: 450px;
+}
+
+body {
+    background-color: #201D30;
+    font-family: "Eugusto", serif, sans-serif;
+    color: #FFFFFF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #171424;
+    display: flex;
+    justify-content: center;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo img {
+    width: 36px;
+    height: auto;
+}
+
+h1 {
+    color: #F8C761;
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+.profile-icon img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: block;
+}
+
+main {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+}
+
+.search-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.search-section h2 {
+    color: #F8C761;
+    font-weight: normal;
+    font-size: 1.6rem;
+}
+
+#searchInput {
+    background-color: #2C263F;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 20px;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    width: 100%;
+    transition: box-shadow 0.2s ease;
+}
+
+#searchInput:focus {
+    box-shadow: 0 0 0 2px #F8C761;
+}
+
+#searchInput::placeholder {
+    color: #8C86A3;
+}
+
+.catalog-section {
+    width: 100%;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.book-card {
+    background-color: #595082;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.book-cover {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    background-color: #2C263F;
+}
+
+.book-info {
+    padding: 10px 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.book-title {
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.book-author {
+    font-size: 0.8rem;
+    color: #D1CDDF;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.book-rating {
+    font-size: 0.8rem;
+    color: #F8C761;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.no-results {
+    display: none;
+    color: #8C86A3;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 30px;
+}
+
+footer {
+    width: 100%;
+    background-color: #171424;
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px;
+    margin-top: 40px;
+}
+
+.footer-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+footer a {
+    color: #F8C761;
+    text-decoration: underline;
+    font-size: 0.85rem;
+}
+
+footer p {
+    color: #F8C761;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+@media (min-width: 600px) {
+    .catalog-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    header {
+        padding: 18px 32px;
+    }
+
+    .logo img {
+        width: 44px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .profile-icon img {
+        width: 44px;
+        height: 44px;
+    }
+
+    main {
+        gap: 32px;
+        padding: 0 32px;
+    }
+
+    .search-section h2 {
+        font-size: 1.8rem;
+    }
+
+    #searchInput {
+        padding: 14px 24px;
+        font-size: 1.1rem;
+    }
+
+    .catalog-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .book-title {
+        font-size: 1rem;
+    }
+
+    .book-author {
+        font-size: 0.88rem;
+    }
+
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    footer a, footer p {
+        font-size: 0.95rem;
+    }
+}

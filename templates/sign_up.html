@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'styles/sign-up-styles.css' %}">
+</head>
+<body>
+    <header>
+        <img src="{% static 'assets/images/logo.svg' %}" alt="Логотип">
+        <h1>MyBook</h1>
+    </header>
+    <main>
+        <form id="registerForm" method="POST" action="{% url 'sign_up' %}">
+            {% csrf_token %}
+            <legend>Регистрация</legend>
+
+            <label>ФИО
+                <input name="first_name" type="text" placeholder="example" value="{{ form.first_name.value|default:'' }}">
+                <span class="error-message">{{ form.first_name.errors.0 }}</span>
+            </label>
+
+            <label>Почта
+                <input name="email" type="email" placeholder="example@ru" value="{{ form.email.value|default:'' }}">
+                <span class="error-message">{{ form.email.errors.0 }}</span>
+            </label>
+
+            <label>Логин
+                <input name="username" type="text" placeholder="example" value="{{ form.username.value|default:'' }}">
+                <span class="error-message">{{ form.username.errors.0 }}</span>
+            </label>
+
+            <label>Пароль
+                <input name="password" type="password" placeholder="example">
+                <span class="error-message">{{ form.password.errors.0 }}</span>
+            </label>
+
+            <label>Повторите пароль
+                <input name="confirm_password" type="password" placeholder="example">
+                <span class="error-message">{{ form.confirm_password.errors.0 }}</span>
+            </label>
+
+            <button type="submit" id="but">Зарегистрироваться</button>
+            <a href="{% url 'sign_in' %}">Есть аккаунт?</a>
+        </form>
+    </main>
+</body>
+</html>

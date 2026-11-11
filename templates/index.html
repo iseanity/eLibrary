@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBook — Главная</title>
+    <link rel="stylesheet" href="{% static 'styles/index-style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="{% static 'assets/images/logo.svg' %}" alt="Логотип">
+                <h1>MyBook</h1>
+            </div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="profile-icon">
+                    <img src="{% static 'assets/images/user.png' %}" alt="Профиль">
+                </a>
+            {% else %}
+                <a href="{% url 'sign_in' %}" class="profile-icon">
+                    <img src="{% static 'assets/images/user.png' %}" alt="Войти">
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <section class="banner">
+            <h2>MyBook — уютный уголок для чтения</h2>
+            <p>Открой для себя тысячи книг прямо в своём браузере.</p>
+            <a href="{% url 'catalog' %}" class="btn-catalog">Каталог</a>
+        </section>
+
+        <section class="slider-section">
+            <h2>Новинки</h2>
+            <div class="slider-wrapper">
+                <div class="cards-container" id="newSlider">
+                    {% for book in new_books %}
+                    <div class="book-card">
+                        <img src="{% static book.cover %}" alt="{{ book.title }}" class="book-cover">
+                        <div class="book-info">
+                            <p class="book-title">{{ book.title }}</p>
+                            <p class="book-author">{{ book.author }}</p>
+                            <p class="book-rating">★ {{ book.rating }}</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p style="color: #8C86A3;">Книги пока не добавлены.</p>
+                    {% endfor %}
+                </div>
+                <button class="slider-btn" onclick="scrollSlider('newSlider', 160)" aria-label="Вперед">
+                    <img src="{% static 'assets/images/next.svg' %}" alt="Стрелка вправо">
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="#">Пользовательское соглашение</a>
+            <a href="#">Политика конфиденциальности</a>
+            <p>Все права защищены 2026 © MyBook</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollSlider(sliderId, distance) {
+            const slider = document.getElementById(sliderId);
+            slider.scrollBy({ left: distance, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBook — Каталог</title>
+    <link rel="stylesheet" href="{% static 'styles/catalog-styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="logo">
+                <img src="{% static 'assets/images/logo.svg' %}" alt="Логотип">
+                <h1>MyBook</h1>
+            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="profile-icon">
+                    <img src="{% static 'assets/images/user.png' %}" alt="Профиль">
+                </a>
+            {% else %}
+                <a href="{% url 'sign_in' %}" class="profile-icon">
+                    <img src="{% static 'assets/images/user.png' %}" alt="Войти">
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <h2>Поиск</h2>
+            <form onsubmit="return false;">
+                <input type="text" id="searchInput" placeholder="поиск по названию или автору...">
+            </form>
+        </section>
+
+        <section class="catalog-section">
+            <div class="catalog-grid" id="catalogGrid">
+                {% for book in books %}
+                <div class="book-card" data-title="{{ book.title|lower }}" data-author="{{ book.author|lower }}">
+                    <img src="{% static book.cover %}" alt="{{ book.title }}" class="book-cover">
+                    <div class="book-info">
+                        <p class="book-title">{{ book.title }}</p>
+                        <p class="book-author">{{ book.author }}</p>
+                        <p class="book-rating">★ {{ book.rating }}</p>
+                        
+                        <!-- Кнопка добавления в список желаний для авторизованных пользователей -->
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'add_to_wishlist' book.id %}" style="display: inline-block; margin-top: 10px; padding: 6px 12px; background-color: #F8C761; color: #2B263F; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold;">В список желаний</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: #8C86A3; text-align: center; font-size: 1.1rem; margin-top: 30px;">В базе пока нет книг</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="#">Пользовательское соглашение</a>
+            <a href="#">Политика конфиденциальности</a>
+            <p>Все права защищены 2026 © MyBook</p>
+        </div>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const bookCards = document.querySelectorAll('.book-card');
+
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase().trim();
+
+            bookCards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const author = card.getAttribute('data-author');
+
+                if (title.includes(filter) || author.includes(filter)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'styles/sign-in-styles.css' %}">
+</head>
+<body>
+    <header>
+        <img src="{% static 'assets/images/logo.svg' %}" alt="Логотип">
+        <h1>MyBook</h1>
+    </header>
+    <main>
+        <form id="autorForm" method="POST" action="{% url 'sign_in' %}">
+            {% csrf_token %}
+            <legend>Вход</legend>
+
+            {% if form.non_field_errors %}
+                <span class="error-message">{{ form.non_field_errors.0 }}</span>
+            {% endif %}
+
+            <label>Логин
+                <input name="username" type="text" placeholder="login" required>
+            </label>
+
+            <label>Пароль
+                <input name="password" type="password" placeholder="example" required>
+            </label>
+
+            <button type="submit" id="but">Войти</button>
+            <a href="{% url 'sign_up' %}">Нет аккаунта?</a>
+        </form>
+    </main>
+</body>
+</html>

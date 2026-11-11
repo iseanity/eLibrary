@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBook — Личный кабинет</title>
+    <link rel="stylesheet" href="{% static 'styles/catalog-styles.css' %}">
+    <style>
+        /* Принудительно уменьшаем отступы между секциями */
+        .catalog-section {
+            min-height: auto;
+        }
+
+        .section-title {
+            color: #F8C761;
+            font-size: 1.3rem;
+            margin-top: 5px !important;
+            margin-bottom: 8px !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Делаем карточки в профиле короче по высоте */
+        .book-card.profile-card {
+            padding: 10px !important;
+            gap: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .profile-card .book-cover {
+            height: 200px !important;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .profile-card .book-info {
+            padding: 4px 0 !important;
+        }
+
+        .profile-card .book-title {
+            font-size: 0.85rem !important;
+            line-height: 1.15;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .profile-card .book-author {
+            font-size: 0.75rem !important;
+            color: #B8B3C9;
+        }
+
+        .profile-card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 4px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-move {
+            background-color: #F8C761;
+            color: #2B263F;
+        }
+
+        .btn-move:hover {
+            background-color: #e5b34c;
+        }
+
+        .btn-delete {
+            background-color: rgba(255, 120, 120, 0.15);
+            color: #FF7878;
+            border: 1px solid rgba(255, 120, 120, 0.3);
+        }
+
+        .btn-delete:hover {
+            background-color: rgba(255, 120, 120, 0.25);
+            color: #ff5252;
+        }
+
+        .badge-count {
+            background: #595082;
+            color: #E2E0EC;
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="logo">
+                <img src="{% static 'assets/images/logo.svg' %}" alt="Логотип">
+                <h1>MyBook</h1>
+            </a>
+            <form action="{% url 'logout' %}" method="POST" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; color: #F8C761; font-family: inherit; font-size: 1rem; cursor: pointer; text-decoration: underline;">
+                    Выйти
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <!-- Информация о пользователе -->
+        <section class="search-section" style="background-color: #595082; padding: 24px; border-radius: 24px; margin-bottom: 15px;">
+            <h2 style="margin-bottom: 10px;">Личный кабинет</h2>
+            <p style="color: #E2E0EC; font-size: 1.1rem; margin-bottom: 6px;">Имя: <strong>{{ user.first_name|default:user.username }}</strong></p>
+            <p style="color: #E2E0EC; font-size: 1rem; margin-bottom: 6px;">Логин: {{ user.username }}</p>
+            <p style="color: #E2E0EC; font-size: 1rem;">Email: {{ user.email|default:"не указан" }}</p>
+            {% if is_admin %}
+                <p style="color: #F8C761; margin-top: 10px; font-weight: bold;">Роль: Администратор (ADMIN)</p>
+            {% else %}
+                <p style="color: #D1CDDF; margin-top: 10px;">Роль: Пользователь (USER)</p>
+            {% endif %}
+        </section>
+
+        <!-- СПИСОК 1: Хочу прочитать -->
+        <section class="catalog-section">
+            <h2 class="section-title">
+                Хочу прочитать 
+                <span class="badge-count">{{ wish_list|length }}</span>
+            </h2>
+            
+            {% if wish_list %}
+                <div class="catalog-grid">
+                    {% for item in wish_list %}
+                    <div class="book-card profile-card">
+                        <div>
+                            <img src="{% static item.book.cover %}" alt="{{ item.book.title }}" class="book-cover">
+                            <div class="book-info">
+                                <p class="book-title">{{ item.book.title }}</p>
+                                <p class="book-author">{{ item.book.author }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card-actions">
+                            <a href="{% url 'update_item_status' item.id %}" class="btn-action btn-move">
+                                Отметить как прочитано
+                            </a>
+                            <a href="{% url 'delete_item' item.id %}" class="btn-action btn-delete">
+                                Удалить
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: #8C86A3; font-size: 1rem;">В списке желаемого пока нет книг.</p>
+            {% endif %}
+        </section>
+
+        <!-- СПИСОК 2: Прочитано -->
+        <section class="catalog-section">
+            <h2 class="section-title">
+                Прочитанные книги 
+                <span class="badge-count">{{ read_list|length }}</span>
+            </h2>
+            
+            {% if read_list %}
+                <div class="catalog-grid">
+                    {% for item in read_list %}
+                    <div class="book-card profile-card">
+                        <div>
+                            <img src="{% static item.book.cover %}" alt="{{ item.book.title }}" class="book-cover">
+                            <div class="book-info">
+                                <p class="book-title">{{ item.book.title }}</p>
+                                <p class="book-author">{{ item.book.author }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card-actions">
+                            <a href="{% url 'update_item_status' item.id %}" class="btn-action btn-move" style="background-color: #595082; color: #E2E0EC;">
+                                Вернуть в желаемое
+                            </a>
+                            <a href="{% url 'delete_item' item.id %}" class="btn-action btn-delete">
+                                Удалить
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: #8C86A3; font-size: 1rem;">У вас пока нет прочитанных книг.</p>
+            {% endif %}
+        </section>
+
+        <!-- Блок администратора -->
+        {% if is_admin %}
+        <section class="catalog-section" style="margin-top: 20px !important; border-top: 2px solid #595082; padding-top: 15px !important;">
+            <h2 style="color: #F8C761; font-size: 1.4rem; margin-bottom: 12px;">Панель администратора (Все записи пользователей)</h2>
+            
+            {% if all_items %}
+                <div class="catalog-grid">
+                    {% for item in all_items %}
+                    <div class="book-card profile-card">
+                        <img src="{% static item.book.cover %}" alt="{{ item.book.title }}" class="book-cover">
+                        <div class="book-info">
+                            <p class="book-title">{{ item.book.title }}</p>
+                            <p style="font-size: 0.75rem; color: #D1CDDF; margin-top: 4px;">Пользователь: <strong>{{ item.user.username }}</strong></p>
+                            <p style="font-size: 0.75rem; color: #F8C761; margin-top: 2px;">Статус: {{ item.get_status_display }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: #8C86A3; font-size: 1rem;">В системе пока нет книг от пользователей.</p>
+            {% endif %}
+        </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="#">Пользовательское соглашение</a>
+            <a href="#">Политика конфиденциальности</a>
+            <p>Все права защищены 2026 © MyBook</p>
+        </div>
+    </footer>
+</body>
+</html>
